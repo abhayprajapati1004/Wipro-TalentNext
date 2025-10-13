@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visitors Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        table {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ccc;
+            margin: 20px 0;
+        }
+        .form-row {
+            padding: 10px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .buttons {
+            text-align: center;
+            padding-top: 20px;
+        }
+        .buttons input[type="submit"], .buttons input[type="reset"] {
+            padding: 10px 20px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+        input[type="reset"] {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <tr>
+            <td>
+                <h2>Visitors Information</h2>
+                <hr>
+                <form action="#" method="post">
+                    <table>
+                        <tr class="form-row">
+                            <td><label for="email">Email address:</label></td>
+                            <td><input type="text" id="email" name="email"></td>
+                        </tr>
+                        <tr class="form-row">
+                            <td><label>User's interest:</label></td>
+                            <td>
+                                <input type="checkbox" id="research" name="interest" value="research">
+                                <label for="research">Research</label>
+                                <input type="checkbox" id="purchase" name="interest" value="purchase">
+                                <label for="purchase">Purchase</label>
+                            </td>
+                        </tr>
+                        <tr class="form-row">
+                            <td><label for="occupation">Occupation:</label></td>
+                            <td>
+                                <select id="occupation" name="occupation">
+                                    <option value="student">Student</option>
+                                    <option value="engineer" selected>Engineer</option>
+                                    <option value="developer">Developer</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="form-row">
+                            <td><label>Send junk emails?</label></td>
+                            <td>
+                                <input type="radio" id="absolutely" name="junk_mail" value="absolutely">
+                                <label for="absolutely">absolutely</label>
+                                <input type="radio" id="noway" name="junk_mail" value="no way" checked>
+                                <label for="noway">no way</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="buttons">
+                                <input type="submit" value="Submit">
+                                <input type="reset" value="Reset">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

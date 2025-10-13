@@ -1,0 +1,222 @@
+Q1. CONNECT hr/hr@localhost:1521/ORCL;
+
+Q2. DESCRIBE EMPLOYEES;
+    SELECT * FROM EMPLOYEES;
+
+Q3. sqlplus hr/hr
+
+
+Q1. DESC DEPARTMENTS;
+    SELECT * FROM DEPARTMENTS;
+
+Q2. SELECT employee_id, last_name, job_id, hire_date AS STARTDATE
+FROM employees;
+
+Q3. SELECT DISTINCT job_id FROM employees;
+
+Q4. SELECT 
+    employee_id AS "Emp #", 
+    last_name AS "Employee", 
+    job_id AS "Job", 
+    hire_date AS "Hire Date"
+    FROM employees;
+
+Q1
+
+SELECT last_name, salary 
+FROM employees 
+WHERE salary > 12000;
+
+Q2
+
+SELECT last_name, department_id 
+FROM employees 
+WHERE employee_id = 176;
+
+Q3
+
+SELECT last_name, salary 
+FROM employees 
+WHERE salary NOT BETWEEN 5000 AND 12000;
+
+Q4
+
+SELECT last_name, job_id, hire_date 
+FROM employees 
+WHERE last_name IN ('Matos', 'Taylor') 
+ORDER BY hire_date ASC;
+
+Q5
+
+SELECT last_name, department_id 
+FROM employees 
+WHERE department_id IN (20, 50) 
+ORDER BY last_name ASC;
+
+Q6
+
+SELECT last_name AS "Employee", salary AS "Monthly Salary" 
+FROM employees 
+WHERE salary BETWEEN 5000 AND 12000 
+AND department_id IN (20, 50);
+
+Q7
+
+SELECT last_name, hire_date 
+FROM employees 
+WHERE TO_CHAR(hire_date, 'YYYY') = '1994';
+
+Q8
+
+SELECT last_name, job_id 
+FROM employees 
+WHERE manager_id IS NULL;
+
+Q9
+
+SELECT last_name, salary, commission_pct 
+FROM employees 
+WHERE commission_pct IS NOT NULL 
+ORDER BY 2 DESC, 3 DESC;
+
+Q10
+
+SELECT last_name, salary
+FROM employees
+WHERE salary > &salary_value;
+
+Q11
+
+SELECT employee_id, last_name, salary, department_id
+FROM employees
+WHERE manager_id = &manager_id
+ORDER BY &sorted_by;
+
+Q12
+
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '__s%';
+
+Q13
+
+SELECT last_name
+FROM employees
+WHERE last_name LIKE '%a%' AND last_name LIKE '%e%';
+
+Q14
+
+SELECT last_name, job_id, salary
+FROM employees
+WHERE job_id IN ('SA_REP', 'ST_CLERK')
+AND salary NOT IN (2500, 3500, 7000);
+
+
+
+Q1
+
+CREATE TABLE MY_EMPLOYEE AS
+SELECT employee_id, first_name, last_name, department_id, salary
+FROM EMPLOYEES
+WHERE 1=2;
+
+Q2
+
+DESC MY_EMPLOYEE;
+
+Q3
+
+INSERT INTO MY_EMPLOYEE
+VALUES (201, 'Michael', 'Hartstein', 20, 13000);
+
+Q4
+
+INSERT INTO MY_EMPLOYEE
+VALUES (202, 'Pat', 'Fay', 20, NULL);
+
+Q5
+
+INSERT INTO MY_EMPLOYEE (employee_id, first_name, last_name, department_id) 
+VALUES (203, 'Susan', 'Mavris', 40);
+
+Q6
+
+INSERT INTO MY_EMPLOYEE VALUES (205, 'Shelley', 'Higgins', 110, 12000);
+INSERT INTO MY_EMPLOYEE VALUES (100, 'Steven', 'King', 90, 24000);
+INSERT INTO MY_EMPLOYEE VALUES (101, 'Neena', 'Kochhar', 90, 17000);
+INSERT INTO MY_EMPLOYEE VALUES (102, 'Lex De', 'Haan', 90, 17000);
+INSERT INTO MY_EMPLOYEE VALUES (111, 'Ismael', 'Sciarra', 100, 7700);
+INSERT INTO MY_EMPLOYEE VALUES (112, 'Jose Manuel', 'Urman', 100, 7800);
+INSERT INTO MY_EMPLOYEE VALUES (204, 'Hermann', 'Baer', 70, 10000);
+
+Q7
+
+UPDATE MY_EMPLOYEE
+SET salary = salary * 1.10
+WHERE department_id = 90;
+
+Q8
+
+UPDATE MY_EMPLOYEE
+SET last_name = 'Higgins'
+WHERE employee_id = 202;
+
+Q9
+
+DELETE FROM MY_EMPLOYEE
+WHERE first_name LIKE '%man%' OR last_name LIKE '%man%';
+
+
+
+Q1
+
+-- The content for the script lab_10_01.sql
+CREATE TABLE DEPT (
+    Dept_ID NUMBER(7) PRIMARY KEY,
+    Dept_Name VARCHAR2(20)
+);
+
+
+Q2
+
+-- Populate DEPT with data from the DEPARTMENTS table
+INSERT INTO DEPT (Dept_ID, Dept_Name)
+SELECT department_id, department_name
+FROM DEPARTMENTS;
+
+-- Insert specific rows as per instructions
+INSERT INTO DEPT (Dept_ID, Dept_Name) VALUES (10, 'Accounts');
+
+-- The following insert will fail because Dept_ID is a primary key and cannot be null.
+-- INSERT INTO DEPT (Dept_ID, Dept_Name) VALUES (null, 'TT');
+
+-- Correct insert for TT
+INSERT INTO DEPT (Dept_ID, Dept_Name) VALUES (20, 'TT');
+
+-- The following insert will fail because 'AI' is not a valid number for the Dept_ID column.
+-- INSERT INTO DEPT (Dept_ID, Dept_Name) VALUES ('AI', 'Accounts');
+
+-- Correct insert for Accounts
+INSERT INTO DEPT (Dept_ID, Dept_Name) VALUES (30, 'Accounts');
+
+Q3
+
+-- The content for the script lab_10_03.sql
+CREATE TABLE EMP (
+    ID NUMBER(7) PRIMARY KEY,
+    LAST_NAME VARCHAR2(25) NOT NULL,
+    FIRST_NAME VARCHAR2(25),
+    DEPT_ID NUMBER(7),
+    CONSTRAINT fk_emp_dept FOREIGN KEY (DEPT_ID) REFERENCES DEPT(Dept_ID)
+);
+
+-- Insert the specified data
+INSERT INTO EMP (ID, LAST_NAME, FIRST_NAME, DEPT_ID) VALUES (101, 'Sam', 'Sundar', 10);
+
+-- The following insert will fail due to a primary key violation (ID 101 already exists).
+-- INSERT INTO EMP (ID, LAST_NAME, FIRST_NAME, DEPT_ID) VALUES (101, 'Ram', 'Krishna', 20);
+
+INSERT INTO EMP (ID, LAST_NAME, FIRST_NAME, DEPT_ID) VALUES (102, 'Gopi', null, 40);
+
+-- The following insert will fail because LAST_NAME cannot be null.
+-- INSERT INTO EMP (ID, LAST_NAME, FIRST_NAME, DEPT_ID) VALUES (103, null, 'ram', 20);

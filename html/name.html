@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GPT-5 Thinking mini — Letters as Headings</title>
+  <style>
+    :root{ --gap: 8px; }
+    body{
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      display:flex;
+      min-height:100vh;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#f7fbff,#fff7f9);
+      margin:0;
+    }
+    .container{
+      background:rgba(255,255,255,0.85);
+      padding:24px 28px;
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(20,20,60,0.08);
+      text-align:center;
+    }
+    .name-row{ display:flex; flex-wrap:wrap; gap:var(--gap); align-items:flex-end; justify-content:center; }
+    .name-row h1,.name-row h2,.name-row h3,.name-row h4,.name-row h5,.name-row h6{
+      margin:0;
+      padding:0 6px;
+      line-height:1;
+      display:inline-block; /* keep them on one line if space allows */
+      transform-origin:center bottom;
+    }
+    p.note{ color:#444; margin-top:12px; font-size:14px }
+    .controls{ margin-top:14px; display:flex; gap:8px; justify-content:center; }
+    input[type="text"]{ padding:8px 10px; font-size:14px; border-radius:8px; border:1px solid #ddd; }
+    button{ padding:8px 12px; border-radius:8px; border:0; background:#0b74de; color:#fff; cursor:pointer }
+    button.secondary{ background:#666 }
+    @media (max-width:520px){ .name-row{ gap:6px } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 style="margin:0 0 12px 0">Letters as Different Headings</h2>
+    <div class="name-row" id="nameRow" aria-live="polite"></div>
+
+    <p class="note">Current name shown: <strong id="currentName">GPT-5 Thinking mini</strong></p>
+
+    <div class="controls">
+      <input id="nameInput" type="text" placeholder="Type a name (e.g. Your Name)" />
+      <button id="renderBtn">Render</button>
+      <button id="downloadBtn" class="secondary">Download .html</button>
+    </div>
+  </div>
+
+  <script>
+    // The name displayed by default. Change this string to whatever you want.
+    let nameStr = "GPT-5 Thinking mini";
+
+    const nameRow = document.getElementById('nameRow');
+    const currentName = document.getElementById('currentName');
+    const nameInput = document.getElementById('nameInput');
+    const renderBtn = document.getElementById('renderBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // Create heading elements for each letter, cycling through h1..h6 so each letter has a different heading size.
+    function renderName(str){
+      nameRow.innerHTML = '';
+      currentName.textContent = str || '(empty)';
+      // Remove leading/trailing whitespace
+      const letters = (str || '').trim().split('');
+      if(letters.length === 0) return;
+
+      for(let i=0;i<letters.length;i++){
+        const char = letters[i];
+        // Cycle heading level 1..6
+        const level = (i % 6) + 1;
+        const h = document.createElement('h' + level);
+        h.textContent = char === ' ' ? '\u00A0' : char; // non-breaking space for spaces
+        // Slight scale tweak so each level feels more distinct on small screens
+        h.style.transform = 'scale(' + (1 - (level-1)*0.06) + ')';
+        h.title = 'Letter: ' + (char === ' ' ? 'space' : char) + ' — heading h' + level;
+        nameRow.appendChild(h);
+      }
+    }
+
+    // initial render
+    renderName(nameStr);
+
+    renderBtn.addEventListener('click', ()=>{
+      const val = nameInput.value.trim();
+      if(val) nameStr = val;
+      renderName(nameStr);
+      nameInput.value = '';
+    });
+
+    // Download the current HTML (serializes the current document)
+    downloadBtn.addEventListener('click', ()=>{
+      const doc = '<!doctype html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([doc], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'name-different-headings.html';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>

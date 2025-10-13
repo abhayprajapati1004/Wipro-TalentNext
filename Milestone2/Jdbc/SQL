@@ -1,0 +1,53 @@
+
+CREATE TABLE STUDENT (
+    rollno NUMBER(4) PRIMARY KEY,
+    studentname VARCHAR2(20) NOT NULL,
+    standard VARCHAR2(10) NOT NULL,
+    dob DATE,
+    fees NUMBER(9, 2)
+);
+
+-- Create this new table for the logging requirement in Assignment 3
+CREATE TABLE STUDENTLOG (
+    rollno NUMBER(4),
+    studentname VARCHAR2(20),
+    standard VARCHAR2(10),
+    leaving_date DATE
+);
+
+CREATE OR REPLACE PROCEDURE calculate_net_salary (
+    p_empno      IN  emp.empno%TYPE,
+    p_net_salary OUT NUMBER
+)
+AS
+    v_sal          emp.sal%TYPE;
+    v_comm         emp.comm%TYPE;
+    v_gross_salary NUMBER;
+    v_it           NUMBER;
+BEGIN
+    -- Step 1: Fetch the salary and commission for the given employee
+    SELECT sal, comm
+    INTO v_sal, v_comm
+    FROM emp
+    WHERE empno = p_empno;
+
+    -- Step 2: Calculate Gross Salary (treating null commission as 0)
+    v_gross_salary := v_sal + NVL(v_comm, 0);
+
+    -- Step 3: Calculate Income Tax (IT) based on commission
+    IF v_comm IS NULL THEN
+        v_it := v_gross_salary * 0.10; -- 10% for null commission
+    ELSIF v_comm < 500 THEN
+        v_it := v_gross_salary * 0.15; -- 15% for commission less than 500
+    ELSE
+        v_it := v_gross_salary * 0.20; -- 20% for commission 500 or more
+    END IF;
+
+    -- Step 4: Calculate Net Salary and assign it to the OUT parameter
+    p_net_salary := v_gross_salary - v_it;
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        p_net_salary := NULL; -- Return NULL if employee not found
+END calculate_net_salary;
+/

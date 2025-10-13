@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top and Bottom Links Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f4f8fc;
+      margin: 40px;
+    }
+    a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .spacer {
+      height: 1000px; /* creates space to scroll */
+    }
+  </style>
+</head>
+<body>
+  <h1>Scroll Navigation Example</h1>
+
+  <!-- Top Link -->
+  <p><a href="#bottom">Go to Bottom of the Page ↓</a></p>
+
+  <div class="spacer"></div>
+
+  <!-- Bottom Anchor and Link -->
+  <p id="bottom"><a href="#top">Go to Top of the Page ↑</a></p>
+</body>
+</html>
