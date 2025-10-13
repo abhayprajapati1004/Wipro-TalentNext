@@ -8,33 +8,32 @@ Prerequisites & Setup
 
 Prerequisites
 
-Basic programming knowledge (any language)
+* Basic programming knowledge (any language)
 
-JDK installed (version 8 / 11 / as per project)
+* JDK installed (version 8 / 11 / as per project)
 
-IDE (Eclipse, IntelliJ, VS Code)
+* IDE (Eclipse, IntelliJ, VS Code)
 
-MySQL / any relational DB / or H2 for quick setup
+* MySQL / any relational DB / or H2 for quick setup
 
-Node.js / npm if front-end frameworks are used
+* Node.js / npm if front-end frameworks are used
 
 Git
 
-
 Setup Instructions
 
-Clone this repository:
+* Clone this repository:
 
 git clone <repository-url>
 cd <repository-folder>
 
 
-Import the project(s) in your IDE
+* Import the project(s) in your IDE
 
-Configure database settings (URL, username, password)
+* Configure database settings (URL, username, password)
 
-Build the project (Maven / Gradle)
+* Build the project (Maven / Gradle)
 
-Run backend (Spring Boot / server)
+* Run backend (Spring Boot / server)
 
-Serve front-end (if separate) or integrate in same project
+* Serve front-end (if separate) or integrate in same project
